@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9db5bc385a5f4e88967fae8cd8e74a4d" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="EntitiesNBDModel.CITY" Width="1.5" PointX="3.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.CLIENT" Width="1.5" PointX="6" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.INVENTORY" Width="1.5" PointX="11.25" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.LABOUR_REQUIREMENT" Width="1.5" PointX="5.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.LABOUR_SUMMARY" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.MATERIAL" Width="1.5" PointX="9" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.MATERIAL_REQ" Width="1.5" PointX="13.5" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.PROD_TEAM" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.PROD_TOOL" Width="1.5" PointX="10.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.PROJECT" Width="1.5" PointX="8.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.TASK" Width="1.5" PointX="8.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.TOOL" Width="1.5" PointX="8.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.WORKER" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.WORKER_TYPE" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_CLIENT_CITY" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_PROJECT_CLIENT" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_INVENTORY_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_MATERIAL_REQ_INVENTORY" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_LABOUR_REQUIREMENT_PROD_TEAM" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_LABOUR_REQUIREMENT_TASK" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_LABOUR_SUMMARY_PROJECT" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_LABOUR_SUMMARY_WORKER_TYPE" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_MATERIAL_REQ_PROJECT" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_PROD_TEAM_PROJECT" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_PROD_TOOL_PROJECT" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_PROD_TOOL_TOOL" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_PROJECT_WORKER" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_WORKER_WORKER_TYPE" ManuallyRouted="false" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_PROJECT" />
+        <EntityTypeShape EntityType="EntitiesNBDModel.TEAM_MEMBER" Width="1.5" PointX="0.75" PointY="11.25" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_PROJECT_TEAM" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_TEAM_MEMBER_TEAM" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_TEAM_MEMBER_WORKER" />
+        <AssociationConnector Association="EntitiesNBDModel.FK_LABOUR_REQUIREMENT_WORKER_TYPE" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

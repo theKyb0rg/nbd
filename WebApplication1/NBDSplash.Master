@@ -1,0 +1,52 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="NBDSplash.master.cs" Inherits="NBDCostTrackingSystem.NBDSplash" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta name="description" content="Natural By Design" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <asp:ContentPlaceHolder ID="Title" runat="server" />
+    </title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/jquery.smartmenus.bootstrap.css" rel="stylesheet" />
+    <link href="Content/animate.css" rel="stylesheet" />
+    <link href="Content/Project.css" rel="stylesheet" />
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/jquery.smartmenus.js"></script>
+    <script src="Scripts/jquery.smartmenus.bootstrap.js"></script>
+    <script src="Scripts/bootstrap-notify.js"></script>
+</head>
+<body class="splashBody">
+    <form id="DefaultForm" runat="server">
+        <nav class="navbar navbar-default splashNav">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="transform: translateY(-5);">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="Default.aspx">Home</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <%-- LEFT NAV--%>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#whatWeDo">What We Do&nbsp;</a></li>
+                        <li><a href="#howWeWork">How We Work&nbsp;</a></li>
+                        <li><a href="#contactUs">Contact Us</a></li>
+                    </ul>
+                    <%--RIGHT NAV--%>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#" data-toggle="modal" data-target="#mdlRegister">Register</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#mdlLogin">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <%--END DAILY WORK REPORT MODAL--%>
+        <asp:ContentPlaceHolder ID="Body" runat="server"></asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

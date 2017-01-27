@@ -1,0 +1,536 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="NBDCostTrackingSystem.Master.cs" Inherits="NBDCostTrackingSystem.Site1" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta name="description" content="NBD Cost Tracking System" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <asp:ContentPlaceHolder ID="Title" runat="server" />
+    </title>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/jquery.smartmenus.bootstrap.css" rel="stylesheet" />
+    <link href="Content/animate.css" rel="stylesheet" />
+    <link href="Content/Project.css" rel="stylesheet" />
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/jquery.smartmenus.js"></script>
+    <script src="Scripts/jquery.smartmenus.bootstrap.js"></script>
+    <script src="Scripts/bootstrap-notify.js"></script>
+    <script src="Scripts/jquery.hotkeys.js"></script>
+    <script src="Scripts/Project.js"></script>
+    <script src="Scripts/HotKeys.js"></script>
+</head>
+<body style="background-color: #EEE;">
+    <div class="jumbotron text-center remove-margin-bottom" style="min-height: 20vh; width: 100%; padding: 0; background-color: #daeace; margin: 0 auto;">
+        <iframe frameborder="0" height="200px" width="500px" src="Content/headerAnim/web/Anim3.html" scrolling="no" align="middle" style="display: block; margin: 0 auto;"></iframe>
+    </div>
+    <form id="WebsiteForm" runat="server">
+        <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
+        <%-- LEFT NAV--%>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="Main.aspx">HOME</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav ">
+                        <li><a href="#">EMPLOYEES&nbsp;<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" data-toggle="modal" data-target="#mdlCreateEmployee"><span class="glyphicon glyphicon-file"></span>&nbsp;Create New Employee</a></li>
+                                <li><a href="ViewAllEmployees.aspx"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;Manage All Employees</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">REPORTS&nbsp;<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#">Design Bid&nbsp;<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="CreateDesignBid.aspx"><span class="glyphicon glyphicon-file"></span>&nbsp;Create Design Bid</a></li>
+                                        <li><a href="ViewAllDesignBids.aspx"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View All Design Bids</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Production Plan&nbsp;<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="AddProductionPlan.aspx"><span class="glyphicon glyphicon-file"></span>&nbsp;Create Production Plan</a></li>
+                                        <li><a href="ViewAllProductionPlans.aspx"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View All Production Plans</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">TEAMS&nbsp;<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" data-toggle="modal" data-target="#mdlCreateTeam"><span class="glyphicon glyphicon-file"></span>&nbsp;Create Team</a></li>
+                                <li><a href="ViewAllTeams.aspx"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View All Teams</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">CLIENTS&nbsp;<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" data-toggle="modal" data-target="#mdlCreateClient"><span class="glyphicon glyphicon-file"></span>&nbsp;Add New Client</a></li>
+                                <li><a href="ViewAllClients.aspx"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;View All Clients</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <%--RIGHT NAV--%>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/Search.aspx"><span class="glyphicon glyphicon-search"></span>&nbsp;SEARCH</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#mdlHelp">&nbsp;<span class="glyphicon glyphicon-question-sign"></span>&nbsp;HELP</a></li>
+                        <li>
+                            <a href="#">Logged in As:&nbsp;<span class="notification"></span>&nbsp;<asp:Label ID="lblUserLoggedIn" runat="server" Text="Label"></asp:Label>&nbsp;<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="btnNotification" data-toggle="modal" data-target="#mdlNotifications"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;Notifications</a></li>
+                                <li><a href="#" id="btnUserSettings" data-toggle="modal" data-target="#mdlUserSettings"><span class="glyphicon glyphicon-user"></span>&nbsp;User Settings</a></li>
+                                <li>
+                                    <asp:LinkButton ID="btnLogout" runat="server" OnClick="btnLogout_Click" AccessKey="L" CausesValidation="False"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</asp:LinkButton></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <asp:ContentPlaceHolder ID="Body" runat="server" />
+        <!-- MODALS -->
+        <asp:EntityDataSource ID="edsWorkerType" runat="server" ConnectionString="name=EntitiesNBD" DefaultContainerName="EntitiesNBD" EnableFlattening="False" EntitySetName="WORKER_TYPE" Select="it.[wrkTypeDesc], it.[ID]"></asp:EntityDataSource>
+        <%--CREATE EMPLOYEE MODAL--%>
+        <div id="mdlCreateEmployee" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Create New Employee</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="txtEmployeeFName">First Name: </label>
+                                    <asp:TextBox ID="txtEmployeeFName" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="txtEmployeeLName">Last Name: </label>
+                                    <asp:TextBox ID="txtEmployeeLName" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="ddlEmployeePosition">Position: </label>
+                                    <asp:DropDownList ID="ddlEmployeePosition" runat="server" CssClass="form-control" AppendDataBoundItems="True" DataSourceID="edsWorkerType" DataTextField="wrkTypeDesc" DataValueField="ID">
+                                        <asp:ListItem>Select a Position..</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnAddNewEmployee" runat="server" CssClass="btn btn-default" Text="Create" OnClick="btnAddNewEmployee_Click" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%-- END EMPOLOYEE MODAL--%>
+        <asp:EntityDataSource ID="edsClientCity" runat="server" ConnectionString="name=EntitiesNBD" DefaultContainerName="EntitiesNBD" EnableFlattening="False" EntitySetName="CITies" Select="it.[ID], it.[city1]"></asp:EntityDataSource>
+        <asp:EntityDataSource ID="edsClientList" runat="server" ConnectionString="name=EntitiesNBD" DefaultContainerName="EntitiesNBD" EnableFlattening="False" EntitySetName="CLIENTs" Select="it.[cliName], it.[ID]"></asp:EntityDataSource>
+        <%--CREATE CLIENT MODAL--%>
+        <div id="mdlCreateClient" class="modal fade" role="dialog">
+            <div class="modal-dialog  modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <asp:Panel ID="pnlCreateNewClient" runat="server">
+                            <h4 class="modal-title">Create New Client</h4>
+                        </asp:Panel>
+                        <asp:Panel ID="pnlEditClient" runat="server" Visible="false">
+                            <h4 class="modal-title">Edit Client</h4>
+                        </asp:Panel>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="txtClientName">Name: </label>
+                                        <asp:RequiredFieldValidator ID="rfvClientName" runat="server" ValidationGroup="createClient" ErrorMessage=" Name cannot be blank." CssClass="text-danger" ControlToValidate="txtClientName"></asp:RequiredFieldValidator>
+                                        <asp:TextBox ID="txtClientName" runat="server" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="txtClientAddress">Address: </label>
+                                        <asp:RequiredFieldValidator ID="rfvClientAddress" runat="server" ValidationGroup="createClient" ErrorMessage=" Address cannot be blank." CssClass="text-danger" ControlToValidate="txtClientAddress"></asp:RequiredFieldValidator>
+                                        <asp:TextBox ID="txtClientAddress" runat="server" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="txtClientCity">City: </label>
+
+                                        <asp:DropDownList ID="ddlClientCity" runat="server" CssClass="form-control" DataSourceID="edsClientCity" DataTextField="city1" DataValueField="ID" AppendDataBoundItems="True">
+                                            <asp:ListItem Value="-1">Select a City...</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="ddlClientProv">Province: </label>
+                                        <asp:DropDownList ID="ddlClientProv" runat="server" CssClass="form-control">
+                                            <asp:ListItem Value="-1">Select a Province...</asp:ListItem>
+                                            <asp:ListItem>Alberta</asp:ListItem>
+                                            <asp:ListItem>British Columbia</asp:ListItem>
+                                            <asp:ListItem>Manitoba</asp:ListItem>
+                                            <asp:ListItem>New Brunswick</asp:ListItem>
+                                            <asp:ListItem>Newfoundland and Labrador</asp:ListItem>
+                                            <asp:ListItem>Northwest Territories</asp:ListItem>
+                                            <asp:ListItem>Nova Scotia</asp:ListItem>
+                                            <asp:ListItem>Nunavut</asp:ListItem>
+                                            <asp:ListItem>Ontario</asp:ListItem>
+                                            <asp:ListItem>Prince Edward Island</asp:ListItem>
+                                            <asp:ListItem>Quebec</asp:ListItem>
+                                            <asp:ListItem>Saskatchewan</asp:ListItem>
+                                            <asp:ListItem>Yukon</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="txtClientPCode">Postal Code: </label>
+                                        <asp:RequiredFieldValidator ID="rfvClientPCode" runat="server" ValidationGroup="createClient" ErrorMessage=" Postal code cannot be blank." CssClass="text-danger" ControlToValidate="txtClientPCode"></asp:RequiredFieldValidator>
+                                        <asp:TextBox ID="txtClientPCode" runat="server" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="txtClientPhone">Phone Number: </label>
+                                        <asp:RequiredFieldValidator ID="rfvClientPhone" runat="server" ValidationGroup="createClient" ErrorMessage=" Phone number cannot be blank." CssClass="text-danger" ControlToValidate="txtClientPhone"></asp:RequiredFieldValidator>
+                                        <asp:TextBox ID="txtClientPhone" runat="server" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="txtClientConFName">Contact First Name: </label>
+                                        <asp:RequiredFieldValidator ID="rfvClientConFName" runat="server" ValidationGroup="createClient" ErrorMessage=" First name cannot be blank." CssClass="text-danger" ControlToValidate="txtClientConFName"></asp:RequiredFieldValidator>
+                                        <asp:TextBox ID="txtClientConFName" runat="server" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="txtClientConLName">Contact Last Name: </label>
+                                        <asp:RequiredFieldValidator ID="rfvClientConLName" runat="server" ValidationGroup="createClient" ErrorMessage=" Last name cannot be blank." CssClass="text-danger" ControlToValidate="txtClientConLName"></asp:RequiredFieldValidator>
+                                        <asp:TextBox ID="txtClientConLName" runat="server" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="txtClientConPosition">Contact Position: </label>
+                                        <asp:RequiredFieldValidator ID="rfvClientConPosition" runat="server" ValidationGroup="createClient" ErrorMessage=" Position cannot be blank." CssClass="text-danger" ControlToValidate="txtClientConPosition"></asp:RequiredFieldValidator>
+                                        <asp:TextBox ID="txtClientConPosition" runat="server" CssClass="form-control"></asp:TextBox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnClientCreate" runat="server" CssClass="btn btn-default" Text="Create" OnClick="btnClientCreate_Click" ValidationGroup="createClient" />
+                        <asp:Button ID="btnSaveClientChanges" runat="server" CssClass="btn btn-default" Text="Save" OnClick="btnSaveClientChanges_Click" ValidationGroup="createClient" Visible="false" />
+                        <asp:Button ID="btnClientCancel" runat="server" CssClass="btn btn-default" Text="Cancel" CausesValidation="false" OnClick="btnClientCancel_Click" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--END CLIENT MODAL--%>
+        <%--CREATE TEAM MODAL--%>
+        <div id="mdlCreateTeam" class="modal fade" role="dialog">
+            <div class="modal-dialog  modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Create New Team</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="txtCreateTeamName">Team Name:</label>
+                                    <asp:TextBox ID="txtCreateTeamName" runat="server" CssClass="form-control"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-10">
+                                <div class="form-group">
+                                    <label for="ddlCreateTeamEmployees">Employees:</label>
+                                    <asp:DropDownList ID="ddlCreateTeamEmployees" runat="server" CssClass="form-control" AppendDataBoundItems="True">
+                                        <asp:ListItem>Select an Employee...</asp:ListItem>
+                                    </asp:DropDownList>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <br />
+                                <button type="button" class="btn btn-default">Add</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h4>Current Members:</h4>
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Team Member</td>
+                                            <td>Job Title</td>
+                                            <td>
+                                                <button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" title="Remove"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Team Member</td>
+                                            <td>Job Title</td>
+                                            <td>
+                                                <button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" title="Remove"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Team Member</td>
+                                            <td>Job Title</td>
+                                            <td>
+                                                <button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" title="Remove"><span class="glyphicon glyphicon-remove"></span></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnCreateTeam" runat="server" CssClass="btn btn-default" Text="Create" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--END TEAM MODAL--%>
+        <%--START HELP MODAL--%>
+        <div id="mdlHelp" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-md">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Help</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Icon Definitions</h3>
+                        <asp:Table ID="helpTable" runat="server" CssClass="table table-condensed">
+                            <asp:TableHeaderRow>
+                                <asp:TableCell><h4><strong>Action</strong></h4></asp:TableCell>
+                                <asp:TableCell><h4><strong>Icons</strong></h4></asp:TableCell>
+                            </asp:TableHeaderRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Create</asp:TableCell>
+                                <asp:TableCell><span class="glyphicon glyphicon-file"></span></asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>View</asp:TableCell>
+                                <asp:TableCell><span class="glyphicon glyphicon-eye-open"></span></asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Edit</asp:TableCell>
+                                <asp:TableCell><span class="glyphicon glyphicon-pencil"></span></asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Delete</asp:TableCell>
+                                <asp:TableCell><span class="glyphicon glyphicon-remove"></span></asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Add</asp:TableCell>
+                                <asp:TableCell><span class="glyphicon glyphicon-plus"></span></asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Clear</asp:TableCell>
+                                <asp:TableCell><span class="glyphicon glyphicon-minus"></span></asp:TableCell>
+                            </asp:TableRow>
+                        </asp:Table>
+                        <h3>Keyboard Shortcuts</h3>
+                        <asp:Table ID="helpTableShortcuts" runat="server" CssClass="table table-condensed">
+                            <asp:TableHeaderRow>
+                                <asp:TableCell><h4><strong>Action</strong></h4></asp:TableCell>
+                                <asp:TableCell><h4><strong>Shortcut</strong></h4></asp:TableCell>
+                            </asp:TableHeaderRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Create New Employee</asp:TableCell>
+                                <asp:TableCell><kbd>ALT</kbd>&nbsp;+&nbsp;<kbd>SHIFT</kbd>&nbsp;+&nbsp;<kbd>E</kbd></asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Create New Design Bid</asp:TableCell>
+                                <asp:TableCell><kbd>ALT</kbd>&nbsp;+&nbsp;<kbd>SHIFT</kbd>&nbsp;+&nbsp;<kbd>D</kbd></asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Create New Production Plan</asp:TableCell>
+                                <asp:TableCell><kbd>ALT</kbd>&nbsp;+&nbsp;<kbd>SHIFT</kbd>&nbsp;+&nbsp;<kbd>P</kbd></asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Create New Team</asp:TableCell>
+                                <asp:TableCell><kbd>ALT</kbd>&nbsp;+&nbsp;<kbd>SHIFT</kbd>&nbsp;+&nbsp;<kbd>T</kbd></asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Create New Client</asp:TableCell>
+                                <asp:TableCell><kbd>ALT</kbd>&nbsp;+&nbsp;<kbd>SHIFT</kbd>&nbsp;+&nbsp;<kbd>C</kbd></asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Help</asp:TableCell>
+                                <asp:TableCell><kbd>ALT</kbd>&nbsp;+&nbsp;<kbd>SHIFT</kbd>&nbsp;+&nbsp;<kbd>H</kbd></asp:TableCell>
+                            </asp:TableRow>
+                            <asp:TableRow>
+                                <asp:TableCell>Logout</asp:TableCell>
+                                <asp:TableCell><kbd>ALT</kbd>&nbsp;+&nbsp;<kbd>SHIFT</kbd>&nbsp;+&nbsp;<kbd>L</kbd></asp:TableCell>
+                            </asp:TableRow>
+                        </asp:Table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--START USER SETTINGS MODAL--%>
+        <div id="mdlUserSettings" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-md">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">User Settings</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="txtUserName">Username:</label>
+                                    <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="txtUserEmail">Email:</label>
+                                    <asp:TextBox ID="txtUserEmail" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="txtUserNewPassword">New Password:</label>
+                                    <asp:TextBox ID="txtUserNewPassword" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="txtUserConfirmPassword">Confirm Password:</label>
+                                    <asp:TextBox ID="txtUserConfirmPassword" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Change</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%-- END HELP MODAL--%>
+    </form>
+    <%--TOOLTIP SCRIPT NEEDS TO GO HERE WON'T WORK PROPERLY IN PROJECT.JS--%>
+    <script>
+        $(document).ready(function () {
+            // Enables tooltip functionality
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    <%--NOTIFICATIONS MODAL--%>
+    <div id="mdlNotifications" class="modal fade" role="dialog">
+        <div class="modal-dialog  modal-sm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Notifications</h4>
+                </div>
+                <div class="modal-body">
+                    <asp:Table ID="tblNotifications" runat="server" CssClass="table table-condensed">
+                        <asp:TableHeaderRow>
+                            <asp:TableCell><h4><strong>Priority</strong></h4></asp:TableCell>
+                            <asp:TableCell><h4><strong>Message</strong></h4></asp:TableCell>
+                        </asp:TableHeaderRow>
+                        <asp:TableRow>
+                            <asp:TableCell CssClass="text-center"><span class="glyphicon glyphicon-ok-circle" style="color: green;"></span></asp:TableCell>
+                            <asp:TableCell>Client LS Mall has approved Design Bid #1.</asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell CssClass="text-center"><span class="glyphicon glyphicon-remove-circle" style="color: red;"></span></asp:TableCell>
+                            <asp:TableCell>Client Dave Kendell has declined Design Bid #4.</asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell CssClass="text-center"><span class="glyphicon glyphicon-question-sign" style="color:deepskyblue"></span></asp:TableCell>
+                            <asp:TableCell>Tamara Bakken has requested approval for Design Bid #3.<br /><br /><a href="#">Click here</a> to review.</asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell CssClass="text-center"><span class="glyphicon glyphicon-exclamation-sign" style="color: red;"></span></asp:TableCell>
+                            <asp:TableCell>A Design Bid that was recently created exceeded the 10% allowed for its Design Budget.<br /><br /><a href="#">Click here</a> to review.</asp:TableCell>
+                        </asp:TableRow>
+                        <asp:TableRow>
+                            <asp:TableCell CssClass="text-center"><span class="glyphicon glyphicon-info-sign" style="color: deepskyblue;"></span></asp:TableCell>
+                            <asp:TableCell>A Production Plan for Design Bid #3 was recently created.<br /><br /><a href="#">Click here</a> to review.</asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-default positionNotificationsCloseButton" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
